@@ -1,6 +1,7 @@
 package com.balugaq.variousclutter.utils;
 
 import com.balugaq.variousclutter.VariousClutter;
+import com.balugaq.variousclutter.api.BasePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unused", "deprecation"})
 public class Debug {
-    private static final JavaPlugin plugin = VariousClutter.instance;
+    private static BasePlugin plugin;
     private static final String debugPrefix = "[Debug] ";
 
     public static void debug(Object @NotNull ... objects) {
@@ -67,6 +68,7 @@ public class Debug {
     }
 
     public static void sendMessage(@NotNull Player player, String message) {
+        init();
         player.sendMessage("[" + plugin.getLogger().getName() + "]" + message);
     }
 
@@ -102,6 +104,7 @@ public class Debug {
     }
 
     public static void log(@NotNull String message) {
+        init();
         plugin.getLogger().info(ChatColor.translateAlternateColorCodes('&', message));
     }
 
@@ -111,5 +114,10 @@ public class Debug {
 
     public static void log() {
         log("");
+    }
+    public static void init() {
+        if (plugin == null) {
+            plugin = VariousClutter.instance;
+        }
     }
 }

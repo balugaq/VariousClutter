@@ -2,10 +2,6 @@ name: VariousClutter
 main: com.balugaq.variousclutter.VariousClutter
 depend: [ Slimefun ]
 authors: [ balugaq ]
-website: https://github.com/balugaq/BuildingStaff
+website: https://github.com/balugaq/VariousClutter
 version: ${project.version}
 api-version: 1.20
-commands:
-  buildingstaff:
-    aliases: bs
-    description: Building Staff base command

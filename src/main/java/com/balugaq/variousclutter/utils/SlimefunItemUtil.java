@@ -1,6 +1,7 @@
 package com.balugaq.variousclutter.utils;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.geo.GEOResource;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -8,10 +9,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.Radioactive;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.experimental.UtilityClass;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 @UtilityClass
@@ -66,5 +69,15 @@ public class SlimefunItemUtil {
         }
 
         Slimefun.getRegistry().getAllItemGroups().remove(itemGroup);
+    }
+
+    public static <T extends SlimefunItem> Optional<T> getSfItem(@NotNull Location location, @NotNull Class<T> clazz) {
+        SlimefunItem item = StorageCacheUtils.getSfItem(location);
+        if (clazz.isInstance(item)) {
+            @SuppressWarnings("unchecked")
+            T t = (T) item;
+            return Optional.of(t);
+        }
+        return Optional.empty();
     }
 }
