@@ -1,11 +1,14 @@
 package com.balugaq.variousclutter.implementation;
 
 import com.balugaq.variousclutter.api.BasePlugin;
+import com.balugaq.variousclutter.utils.Debug;
+import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -15,15 +18,8 @@ public class VariousClutterSetup {
     public static NestedItemGroup nested;
     public static SubItemGroup clutter_1;
     public static SlimefunItemStack portalFrameItem;
-    public static SlimefunItemStack camouflagePlateStoneItem;
     public static PortalFrame portalFrame;
-    public static CamouflagePlate camouflagePlateStone;
     public static ItemStack[] portalFrameRecipe = {
-            null, null, null,
-            null, null, null,
-            null, null, null
-    };
-    public static ItemStack[] camouflagePlateStoneRecipe = {
             null, null, null,
             null, null, null,
             null, null, null
@@ -59,11 +55,29 @@ public class VariousClutterSetup {
         );
         portalFrame = (PortalFrame) new PortalFrame(clutter_1, portalFrameItem, RecipeType.NULL, portalFrameRecipe).register(instance);
 
-        camouflagePlateStoneItem = new SlimefunItemStack("VARIOUS_CLUTTER_CAMOUFLAGE_PLATE_STONE",
-                Material.STONE,
-                "Camouflage Plate (Stone)",
-                ""
-        );
-        camouflagePlateStone = (CamouflagePlate) new CamouflagePlate(clutter_1, camouflagePlateStoneItem, RecipeType.NULL, camouflagePlateStoneRecipe).register(instance);
+        for (Material material : Material.values()) {
+            if (ItemFilter.isDisabledMaterial(material)) {
+                continue;
+            }
+
+            String name = ItemStackHelper.getDisplayName(new ItemStack(material));
+            Debug.debug("Registering CamouflagePlate for " + name);
+            Debug.debug(" | Material: " + material.name());
+            try {
+                new CamouflagePlate(clutter_1,
+                        new SlimefunItemStack("VARIOUS_CLUTTER_CAMOUFLAGE_PLATE_" + material.name().toUpperCase(),
+                                material,
+                                "&x&0&0&D&2&C&F伪装板 (" + name + ")",
+                                ""
+                        ), RecipeType.NULL, new ItemStack[]{
+                        null, null, null,
+                        null, null, null,
+                        null, null, null
+                }).register(instance);
+            } catch (Throwable e) {
+                Debug.log("Failed to register CamouflagePlate for " + material.name());
+                Debug.log(e);
+            }
+        }
     }
 }
