@@ -4,14 +4,13 @@ import com.balugaq.variousclutter.VariousClutter;
 import com.balugaq.variousclutter.api.BasePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unused", "deprecation"})
 public class Debug {
-    private static BasePlugin plugin;
     private static final String debugPrefix = "[Debug] ";
+    private static BasePlugin plugin;
 
     public static void debug(Object @NotNull ... objects) {
         StringBuilder sb = new StringBuilder();
@@ -115,6 +114,7 @@ public class Debug {
     public static void log() {
         log("");
     }
+
     public static void init() {
         if (plugin == null) {
             plugin = VariousClutter.instance;

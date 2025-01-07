@@ -14,17 +14,18 @@ import java.util.Set;
 public class SpecialPortalCreateEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Set<Location> portalLocations;
+
     public SpecialPortalCreateEvent(Set<Location> portalLocations, Player player) {
         super(player);
         this.portalLocations = new HashSet<>(portalLocations);
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 }

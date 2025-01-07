@@ -75,6 +75,7 @@ public class TextModelBuilder extends AbstractModelBuilder implements Cloneable 
     private Boolean fixedPose;
     private Map<String, List<MetadataValue>> metadata;
     private Component customName;
+
     public TextModelBuilder() {
     }
 

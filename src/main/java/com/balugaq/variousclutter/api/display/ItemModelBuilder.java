@@ -66,6 +66,7 @@ public class ItemModelBuilder extends AbstractModelBuilder implements Cloneable 
     private Boolean fixedPose;
     private Map<String, List<MetadataValue>> metadata;
     private Component customName;
+
     public ItemModelBuilder() {
     }
 

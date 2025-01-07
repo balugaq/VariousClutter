@@ -2,28 +2,31 @@ package com.balugaq.variousclutter.implementation;
 
 import com.balugaq.variousclutter.api.Tool;
 import com.balugaq.variousclutter.api.display.BlockModelBuilder;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
+import com.balugaq.variousclutter.utils.Debug;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
-import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class CamouflagePlate extends Tool {
-    private static final BlockModelBuilder model = new BlockModelBuilder().brightness(new Display.Brightness(15, 15));
+    public static final float FIXED_BLOCK_SIZE = 0.01f;
+    private static final BlockModelBuilder model = new BlockModelBuilder().brightness(new Display.Brightness(0, 15));
 
     public CamouflagePlate(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -36,26 +39,35 @@ public class CamouflagePlate extends Tool {
     @Override
     public void preRegister() {
         super.preRegister();
-        addItemHandler(new ItemUseHandler() {
-            @Override
-            public void onRightClick(PlayerRightClickEvent playerRightClickEvent) {
-                playerRightClickEvent.cancel();
-                Optional<Block> o = playerRightClickEvent.getClickedBlock();
-                if (!o.isPresent()) {
-                    return;
-                }
+        addItemHandler((ItemUseHandler) playerRightClickEvent -> {
+            playerRightClickEvent.cancel();
+            Optional<Block> o = playerRightClickEvent.getClickedBlock();
+            if (o.isEmpty()) {
+                return;
+            }
 
-                Block block = o.get();
-                BlockFace clickedFace = playerRightClickEvent.getClickedFace();
-                Location location = block.getLocation();
-                Player player = playerRightClickEvent.getPlayer();
-                ItemStack itemStack = playerRightClickEvent.getItem();
-                Material material = block.getType();
-                if (material == Material.AIR) {
-                    return;
-                }
+            Block block = o.get();
+            BlockFace clickedFace = playerRightClickEvent.getClickedFace();
+            Location location = block.getLocation();
+            Player player = playerRightClickEvent.getPlayer();
+            ItemStack itemStack = playerRightClickEvent.getItem();
+            Material material = itemStack.getType();
+            if (material == Material.AIR) {
+                return;
+            }
 
-                if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
+            if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
+                boolean hasDisplay = false;
+                Collection<BlockDisplay> blockDisplays = location.clone().add(clickedFace.getDirection().multiply(-FIXED_BLOCK_SIZE)).getNearbyEntitiesByType(BlockDisplay.class, CamouflagePlate.FIXED_BLOCK_SIZE);
+                for (BlockDisplay blockDisplay : blockDisplays) {
+                    List<MetadataValue> metadata = blockDisplay.getMetadata("camouflage_plate");
+                    for (MetadataValue data : metadata) {
+                        if (data.asBoolean()) {
+                            hasDisplay = true;
+                        }
+                    }
+                }
+                if (!hasDisplay) {
                     camouflagePlate.addDisplay(location, clickedFace, material);
                     itemStack.setAmount(itemStack.getAmount() - 1);
                 }
@@ -64,35 +76,64 @@ public class CamouflagePlate extends Tool {
     }
 
     private void addDisplay(Location location, BlockFace clickedFace, Material material) {
+        Debug.debug("Adding display, details:");
+        Debug.debug(" | Location: " + location);
+        Debug.debug(" | Clicked face: " + clickedFace);
+        Debug.debug(" | Material: " + material);
         BlockModelBuilder clone = model.clone();
         clone.block(material);
         Vector3f offset = new Vector3f(0f, 0f, 0f);
+        float sizex = 0f;
+        float sizey = 0f;
+        float sizez = 0f;
         switch (clickedFace) {
             case UP -> {
                 offset.y = 1f;
+                sizex = 1f;
+                sizez = 1f;
             }
             case DOWN -> {
-                offset.y = 0f;
+                offset.y = -FIXED_BLOCK_SIZE;
+                sizex = 1f;
+                sizez = 1f;
             }
             case NORTH -> {
-                offset.z = 0f;
+                offset.z = -FIXED_BLOCK_SIZE;
+                sizex = 1f;
+                sizey = 1f;
             }
             case SOUTH -> {
                 offset.z = 1f;
+                sizex = 1f;
+                sizey = 1f;
             }
             case EAST -> {
                 offset.x = 1f;
+                sizey = 1f;
+                sizez = 1f;
             }
             case WEST -> {
-                offset.x = 0f;
+                offset.x = -FIXED_BLOCK_SIZE;
+                sizey = 1f;
+                sizez = 1f;
             }
         }
+        Debug.debug(" | Offset x: " + offset.x);
+        Debug.debug(" | Offset y: " + offset.y);
+        Debug.debug(" | Offset z: " + offset.z);
+        sizex += FIXED_BLOCK_SIZE * 2;
+        sizey += FIXED_BLOCK_SIZE * 2;
+        sizez += FIXED_BLOCK_SIZE * 2;
         clone.setTranslation(offset);
         clone.setSize(
-                offset.x == 1f ? 0.01f : 1f,
-                offset.y == 1f ? 0.01f : 1f,
-                offset.z == 1f ? 0.01f : 1f
+                sizex,
+                sizey,
+                sizez
         );
+
+        Debug.debug(" | Size x: " + sizex);
+        Debug.debug(" | Size y: " + sizey);
+        Debug.debug(" | Size z: " + sizez);
 
         clone.fixedMetaData(getAddon().getJavaPlugin(), "camouflage_plate", true);
         clone.buildAt(location);

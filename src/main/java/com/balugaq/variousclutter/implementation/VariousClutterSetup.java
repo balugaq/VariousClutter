@@ -1,9 +1,6 @@
 package com.balugaq.variousclutter.implementation;
 
-import com.balugaq.variousclutter.VariousClutter;
 import com.balugaq.variousclutter.api.BasePlugin;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
@@ -12,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class VariousClutterSetup {
     public static BasePlugin instance;
@@ -54,6 +50,7 @@ public class VariousClutterSetup {
                         "&6Various Clutter"
                 ));
     }
+
     protected static void setupItems() {
         portalFrameItem = new SlimefunItemStack("VARIOUS_CLUTTER_PORTAL_FRAME",
                 Material.CRYING_OBSIDIAN,

@@ -21,12 +21,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -78,8 +76,9 @@ public class SpecialPortalCreateListener implements Listener {
             }
         }
     }
+
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void opSpecialPortalCreate(BlockDispenseEvent event)  {
+    public void opSpecialPortalCreate(BlockDispenseEvent event) {
         Block block = event.getBlock();
         if (!(block.getBlockData() instanceof Directional directional)) {
             Debug.debug("Block is not directional [Code 12]");
