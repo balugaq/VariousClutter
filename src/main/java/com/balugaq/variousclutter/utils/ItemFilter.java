@@ -40,7 +40,6 @@ public class ItemFilter {
                 // Items that can be placed in a location
                 || material.isAir()
                 || !material.isBlock()
-                || material.isBurnable()
                 || !material.isItem()
 
                 // Items that is invalid
