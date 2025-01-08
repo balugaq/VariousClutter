@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
 public class ItemFilter {
+    public boolean isPortalMaterial(@NotNull Material material) {
+        return material == Material.NETHER_PORTAL || material == Material.END_PORTAL || material == Material.END_GATEWAY;
+    }
     public boolean isDisabledMaterial(@NotNull Material material) {
         return
                 // Items that can store items
@@ -218,7 +221,6 @@ public class ItemFilter {
                 || material == Material.CHAIN
                 || material == Material.DAYLIGHT_DETECTOR
                 || material == Material.ENDER_CHEST
-                || material.name().endsWith("_LEAVES")
                 || material == Material.SCULK_SENSOR
                 || material == Material.SCULK_SHRIEKER
                 || material == Material.CALIBRATED_SCULK_SENSOR
@@ -231,7 +233,11 @@ public class ItemFilter {
                 || material == Material.COBWEB
                 || material == Material.FARMLAND
                 || material == Material.DIRT_PATH
-                || material.name().endsWith("_WALL_FAN");
+                || material.name().endsWith("_WALL_FAN")
+                || material == Material.BIG_DRIPLEAF
+                || material == Material.SMALL_DRIPLEAF
+                || material == Material.SCAFFOLDING
+                || material == materialValueOf("GRASS");
     }
 
     @NotNull

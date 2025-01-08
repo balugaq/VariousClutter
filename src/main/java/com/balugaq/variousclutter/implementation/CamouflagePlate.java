@@ -1,8 +1,10 @@
 package com.balugaq.variousclutter.implementation;
 
+import com.balugaq.variousclutter.VariousClutter;
 import com.balugaq.variousclutter.api.Tool;
 import com.balugaq.variousclutter.api.display.BlockModelBuilder;
 import com.balugaq.variousclutter.utils.Debug;
+import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CamouflagePlate extends Tool {
+    public static final String KEY = "camouflage_plate";
     public static final float FIXED_BLOCK_SIZE = 0.01f;
     private static final BlockModelBuilder model = new BlockModelBuilder().brightness(new Display.Brightness(0, 15));
 
@@ -49,7 +52,6 @@ public class CamouflagePlate extends Tool {
             Block block = o.get();
             BlockFace clickedFace = playerRightClickEvent.getClickedFace();
             Location location = block.getLocation();
-            Player player = playerRightClickEvent.getPlayer();
             ItemStack itemStack = playerRightClickEvent.getItem();
             Material material = itemStack.getType();
             if (material == Material.AIR) {
@@ -57,17 +59,8 @@ public class CamouflagePlate extends Tool {
             }
 
             if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
-                boolean hasDisplay = false;
-                Collection<BlockDisplay> blockDisplays = location.clone().add(clickedFace.getDirection().multiply(-FIXED_BLOCK_SIZE)).getNearbyEntitiesByType(BlockDisplay.class, CamouflagePlate.FIXED_BLOCK_SIZE);
-                for (BlockDisplay blockDisplay : blockDisplays) {
-                    List<MetadataValue> metadata = blockDisplay.getMetadata("camouflage_plate");
-                    for (MetadataValue data : metadata) {
-                        if (data.asBoolean()) {
-                            hasDisplay = true;
-                        }
-                    }
-                }
-                if (!hasDisplay) {
+                Material blockType = block.getType();
+                if (ItemFilter.isPortalMaterial(material) || !ItemFilter.isDisabledMaterial(blockType)) {
                     camouflagePlate.addDisplay(location, clickedFace, material);
                     itemStack.setAmount(itemStack.getAmount() - 1);
                 }
@@ -135,7 +128,10 @@ public class CamouflagePlate extends Tool {
         Debug.debug(" | Size y: " + sizey);
         Debug.debug(" | Size z: " + sizez);
 
-        clone.fixedMetaData(getAddon().getJavaPlugin(), "camouflage_plate", true);
-        clone.buildAt(location);
+        clone.scoreboardTags(KEY);
+        BlockDisplay blockDisplay = clone.buildAt(location);
+        synchronized (VariousClutter.instance.camouflagePlates) {
+            VariousClutter.instance.camouflagePlates.add(blockDisplay.getUniqueId());
+        }
     }
 }

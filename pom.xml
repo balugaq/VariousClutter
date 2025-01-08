@@ -6,7 +6,7 @@
 
     <groupId>com.balugaq</groupId>
     <artifactId>VariousClutter</artifactId>
-    <version>3</version>
+    <version>5</version>
     <packaging>jar</packaging>
 
     <name>VariousClutter</name>

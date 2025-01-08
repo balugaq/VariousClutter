@@ -104,7 +104,7 @@ public class Debug {
 
     public static void log(@NotNull String message) {
         init();
-        plugin.getLogger().info(ChatColor.translateAlternateColorCodes('&', message));
+        plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
     public static void log(@NotNull Throwable e) {
