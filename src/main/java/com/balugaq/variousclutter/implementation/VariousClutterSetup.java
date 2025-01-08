@@ -15,13 +15,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
 public class VariousClutterSetup {
-    public static BasePlugin instance;
-    public static NestedItemGroup nested;
-    public static SubItemGroup clutter;
-    public static SubItemGroup camouflage_plates;
-    public static SlimefunItemStack portalFrameItem;
-    public static PortalFrame portalFrame;
-
     public static final ItemStack Obsidian = new ItemStack(Material.OBSIDIAN);
     public static final ItemStack ItemFrame = new ItemStack(Material.ITEM_FRAME);
     public static final ItemStack[] portalFrameRecipe = {
@@ -29,6 +22,12 @@ public class VariousClutterSetup {
             SlimefunItems.COMPRESSED_CARBON, SlimefunItems.ENRICHED_NETHER_ICE, SlimefunItems.COMPRESSED_CARBON,
             Obsidian, SlimefunItems.COMPRESSED_CARBON, Obsidian
     };
+    public static BasePlugin instance;
+    public static NestedItemGroup nested;
+    public static SubItemGroup clutter;
+    public static SubItemGroup camouflage_plates;
+    public static SlimefunItemStack portalFrameItem;
+    public static PortalFrame portalFrame;
 
     public static void setup(BasePlugin plugin) {
         instance = plugin;

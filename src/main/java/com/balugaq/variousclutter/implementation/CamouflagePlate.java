@@ -16,14 +16,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 public class CamouflagePlate extends Tool {
@@ -60,7 +56,7 @@ public class CamouflagePlate extends Tool {
 
             if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
                 Material blockType = block.getType();
-                if (ItemFilter.isPortalMaterial(material) || !ItemFilter.isDisabledMaterial(blockType)) {
+                if (ItemFilter.isPortalMaterial(blockType) || !ItemFilter.isDisabledMaterial(blockType)) {
                     camouflagePlate.addDisplay(location, clickedFace, material);
                     itemStack.setAmount(itemStack.getAmount() - 1);
                 }

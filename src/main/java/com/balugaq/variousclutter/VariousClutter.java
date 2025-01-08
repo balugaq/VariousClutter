@@ -9,28 +9,25 @@ import com.balugaq.variousclutter.implementation.VariousClutterSetup;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
 public class VariousClutter extends BasePlugin {
     public static VariousClutter instance;
-    public ConfigManager configManager;
     public final Set<UUID> camouflagePlates = new HashSet<>();
+    public ConfigManager configManager;
     public Runnable camouflagePlateCheckTask;
 
     @Override
@@ -84,6 +81,7 @@ public class VariousClutter extends BasePlugin {
     public boolean isDebug() {
         return instance.configManager.isDebug();
     }
+
     private void startTasks() {
         Bukkit.getScheduler().runTaskTimer(instance, getCamouflagePlateCheckTask(), 20L, 60L);
     }
@@ -108,7 +106,7 @@ public class VariousClutter extends BasePlugin {
                         if (entity instanceof BlockDisplay blockDisplay) {
                             Location location = blockDisplay.getLocation();
                             Material material = location.getBlock().getType();
-                            if (ItemFilter.isDisabledMaterial(material)) {
+                            if (!ItemFilter.isPortalMaterial(material) && ItemFilter.isDisabledMaterial(material)) {
                                 Set<String> tags = blockDisplay.getScoreboardTags();
                                 if (tags.contains(CamouflagePlate.KEY)) {
                                     String sfid = "VARIOUS_CLUTTER_CAMOUFLAGE_PLATE_" + blockDisplay.getBlock().getMaterial().name().toUpperCase();
