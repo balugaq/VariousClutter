@@ -1,7 +1,7 @@
-package com.balugaq.variousclutter.implementation;
+package com.balugaq.variousclutter.implementation.slimefun.tools;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.api.Tool;
+import com.balugaq.variousclutter.api.slimefun.Tool;
 import com.balugaq.variousclutter.api.display.BlockModelBuilder;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
@@ -16,8 +16,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.Optional;
@@ -31,10 +32,6 @@ public class CamouflagePlate extends Tool {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    public CamouflagePlate(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, @Nullable ItemStack recipeOutput) {
-        super(itemGroup, item, recipeType, recipe, recipeOutput);
-    }
-
     @Override
     public void preRegister() {
         super.preRegister();
@@ -45,20 +42,24 @@ public class CamouflagePlate extends Tool {
                 return;
             }
 
-            Block block = o.get();
-            BlockFace clickedFace = playerRightClickEvent.getClickedFace();
-            Location location = block.getLocation();
             ItemStack itemStack = playerRightClickEvent.getItem();
             Material material = itemStack.getType();
             if (material == Material.AIR) {
                 return;
             }
 
+            Block block = o.get();
+            BlockFace clickedFace = playerRightClickEvent.getClickedFace();
+            Location location = block.getLocation();
+            Player player = playerRightClickEvent.getPlayer();
+
             if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
                 Material blockType = block.getType();
-                if (ItemFilter.isPortalMaterial(blockType) || !ItemFilter.isDisabledMaterial(blockType)) {
+                if (!ItemFilter.isDisabledMaterial(blockType)) {
                     camouflagePlate.addDisplay(location, clickedFace, material);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
+                    if (!player.isOp()) {
+                        itemStack.setAmount(itemStack.getAmount() - 1);
+                    }
                 }
             }
         });
@@ -129,5 +130,15 @@ public class CamouflagePlate extends Tool {
         synchronized (VariousClutter.instance.camouflagePlates) {
             VariousClutter.instance.camouflagePlates.add(blockDisplay.getUniqueId());
         }
+    }
+
+    private static boolean isCamouflagePlate(Entity entity) {
+        if (entity instanceof BlockDisplay blockDisplay) {
+            return isCamouflagePlate(blockDisplay);
+        }
+        return false;
+    }
+    private static boolean isCamouflagePlate(BlockDisplay blockDisplay) {
+        return blockDisplay.getScoreboardTags().contains(KEY);
     }
 }

@@ -7,20 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
 public class ItemFilter {
-    public boolean isPortalMaterial(@NotNull Material material) {
-        return material == Material.NETHER_PORTAL || material == Material.END_PORTAL || material == Material.END_GATEWAY;
-    }
-
     public boolean isDisabledMaterial(@NotNull Material material) {
         return
                 // Items that can store items
                 MaterialTags.SHULKER_BOXES.isTagged(material)
-                        || material == Material.CHEST
-                        || material == Material.TRAPPED_CHEST
-                        || material == Material.BARREL
                         || material == Material.LECTERN
-                        || material == Material.DISPENSER
-                        || material == Material.DROPPER
                         || material == Material.HOPPER
                         || material == materialValueOf("VAULT")
 
@@ -48,14 +39,7 @@ public class ItemFilter {
 
                         // Items that is invalid
                         || material == Material.END_PORTAL_FRAME
-                        || material == Material.BEDROCK
-                        || material == Material.COMMAND_BLOCK
-                        || material == Material.CHAIN_COMMAND_BLOCK
-                        || material == Material.REPEATING_COMMAND_BLOCK
                         || material == Material.STRUCTURE_VOID
-                        || material == Material.STRUCTURE_BLOCK
-                        || material == Material.JIGSAW
-                        || material == Material.BARRIER
                         || material == Material.LIGHT
                         || material == Material.SPAWNER
                         || material == materialValueOf("TRIAL_SPAWNER")
@@ -63,33 +47,20 @@ public class ItemFilter {
                         || material == Material.NETHER_WART
 
                         // Items that has gui
-                        || material == Material.CRAFTING_TABLE
                         || material == Material.STONECUTTER
-                        || material == Material.CARTOGRAPHY_TABLE
-                        || material == Material.SMITHING_TABLE
                         || material == Material.GRINDSTONE
-                        || material == Material.LOOM
-                        || material == Material.FURNACE
-                        || material == Material.SMOKER
-                        || material == Material.BLAST_FURNACE
                         || material == Material.CAMPFIRE
                         || material == Material.SOUL_CAMPFIRE
                         || material == Material.ANVIL
                         || material == Material.CHIPPED_ANVIL
                         || material == Material.DAMAGED_ANVIL
-                        || material == Material.COMPOSTER
-                        || material == Material.JUKEBOX
                         || material == Material.ENCHANTING_TABLE
                         || material == Material.BREWING_STAND
-                        || material == Material.CAULDRON
-                        || material == Material.BEACON
                         || material == Material.BEE_NEST
                         || material == Material.BEEHIVE
                         || material == Material.FLOWER_POT
                         || material == Material.DECORATED_POT
-                        || material == Material.CHISELED_BOOKSHELF
                         || MaterialTags.SIGNS.isTagged(material)
-                        || material == materialValueOf("CRAFTER")
 
                         // Items that have different types
                         || material == Material.PLAYER_HEAD
@@ -117,7 +88,6 @@ public class ItemFilter {
                         || material.name().endsWith("_BUTTON")
                         || material == Material.RAIL
                         || material.name().endsWith("_RAIL")
-                        || material.name().endsWith("_CORAL")
                         || material.name().endsWith("_CORAL_FAN")
                         || material.name().endsWith("_CARPET")
                         || material == Material.TURTLE_EGG
@@ -133,10 +103,6 @@ public class ItemFilter {
                         || material.name().endsWith("_PRESSURE_PLATE")
                         || material == Material.MOSS_CARPET
                         || material == Material.SNOW
-                        || material == Material.FROSTED_ICE
-                        || material == Material.WATER_CAULDRON
-                        || material == Material.LAVA_CAULDRON
-                        || material == Material.POWDER_SNOW_CAULDRON
                         || material == Material.SMALL_AMETHYST_BUD
                         || material == Material.MEDIUM_AMETHYST_BUD
                         || material == Material.LARGE_AMETHYST_BUD
@@ -170,7 +136,6 @@ public class ItemFilter {
                         || material == Material.SPORE_BLOSSOM
                         || material == Material.BAMBOO
                         || material == Material.SUGAR_CANE
-                        || material == Material.CACTUS
                         || material == Material.CRIMSON_ROOTS
                         || material == Material.WARPED_ROOTS
                         || material == Material.NETHER_SPROUTS
@@ -198,10 +163,6 @@ public class ItemFilter {
                         || material == materialValueOf("RESIN_CLUMP")
                         || material == Material.FIRE
                         || material == Material.SOUL_FIRE
-                        || material == Material.END_PORTAL
-                        || material == Material.END_GATEWAY
-                        || material == Material.NETHER_PORTAL
-                        || material == Material.MUSHROOM_STEM
                         || material == Material.PISTON_HEAD
                         || material == Material.SUSPICIOUS_SAND
                         || material == Material.SUSPICIOUS_GRAVEL
@@ -221,7 +182,6 @@ public class ItemFilter {
                         || material == Material.LIGHTNING_ROD
                         || material == Material.CHAIN
                         || material == Material.DAYLIGHT_DETECTOR
-                        || material == Material.ENDER_CHEST
                         || material == Material.SCULK_SENSOR
                         || material == Material.SCULK_SHRIEKER
                         || material == Material.CALIBRATED_SCULK_SENSOR
@@ -231,10 +191,10 @@ public class ItemFilter {
                         || MaterialTags.FENCES.isTagged(material)
                         || material == Material.GLASS_PANE
                         || material == Material.IRON_BARS
-                        || material == Material.COBWEB
                         || material == Material.FARMLAND
                         || material == Material.DIRT_PATH
                         || material.name().endsWith("_WALL_FAN")
+                        || material.name().endsWith("_WALL_BANNER")
                         || material == Material.BIG_DRIPLEAF
                         || material == Material.SMALL_DRIPLEAF
                         || material == Material.SCAFFOLDING

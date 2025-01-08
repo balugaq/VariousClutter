@@ -1,7 +1,7 @@
 package com.balugaq.variousclutter.utils;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.api.BasePlugin;
+import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

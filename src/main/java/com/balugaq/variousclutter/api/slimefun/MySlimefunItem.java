@@ -1,5 +1,6 @@
-package com.balugaq.variousclutter.api;
+package com.balugaq.variousclutter.api.slimefun;
 
+import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;

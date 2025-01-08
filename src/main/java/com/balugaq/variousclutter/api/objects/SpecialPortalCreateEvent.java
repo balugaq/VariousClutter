@@ -1,4 +1,4 @@
-package com.balugaq.variousclutter.api;
+package com.balugaq.variousclutter.api.objects;
 
 import lombok.Getter;
 import org.bukkit.Location;
@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+@Deprecated(forRemoval = true)
 @Getter
 public class SpecialPortalCreateEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();

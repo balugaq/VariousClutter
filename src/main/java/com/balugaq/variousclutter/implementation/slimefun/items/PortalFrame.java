@@ -1,6 +1,6 @@
-package com.balugaq.variousclutter.implementation;
+package com.balugaq.variousclutter.implementation.slimefun.items;
 
-import com.balugaq.variousclutter.api.Item;
+import com.balugaq.variousclutter.api.slimefun.Item;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;

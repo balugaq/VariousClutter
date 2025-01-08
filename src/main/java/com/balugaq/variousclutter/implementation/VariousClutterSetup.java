@@ -1,6 +1,8 @@
 package com.balugaq.variousclutter.implementation;
 
-import com.balugaq.variousclutter.api.BasePlugin;
+import com.balugaq.variousclutter.api.plugin.BasePlugin;
+import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
+import com.balugaq.variousclutter.implementation.slimefun.items.PortalFrame;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;

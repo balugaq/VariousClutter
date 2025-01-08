@@ -1,7 +1,7 @@
 package com.balugaq.variousclutter.core.listeners;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.implementation.CamouflagePlate;
+import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;

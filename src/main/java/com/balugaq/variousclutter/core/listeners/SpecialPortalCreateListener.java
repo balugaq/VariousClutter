@@ -1,7 +1,7 @@
 package com.balugaq.variousclutter.core.listeners;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.implementation.PortalFrame;
+import com.balugaq.variousclutter.implementation.slimefun.items.PortalFrame;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.SlimefunItemUtil;
 import org.bukkit.Axis;

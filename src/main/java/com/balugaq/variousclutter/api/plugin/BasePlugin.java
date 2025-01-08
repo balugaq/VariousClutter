@@ -1,4 +1,4 @@
-package com.balugaq.variousclutter.api;
+package com.balugaq.variousclutter.api.plugin;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import org.bukkit.plugin.java.JavaPlugin;

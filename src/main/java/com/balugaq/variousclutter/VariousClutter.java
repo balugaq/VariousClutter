@@ -1,10 +1,10 @@
 package com.balugaq.variousclutter;
 
-import com.balugaq.variousclutter.api.BasePlugin;
+import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import com.balugaq.variousclutter.core.listeners.CamouflagePlateBreakListener;
 import com.balugaq.variousclutter.core.listeners.SpecialPortalCreateListener;
 import com.balugaq.variousclutter.core.managers.ConfigManager;
-import com.balugaq.variousclutter.implementation.CamouflagePlate;
+import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.VariousClutterSetup;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
@@ -106,7 +106,7 @@ public class VariousClutter extends BasePlugin {
                         if (entity instanceof BlockDisplay blockDisplay) {
                             Location location = blockDisplay.getLocation();
                             Material material = location.getBlock().getType();
-                            if (!ItemFilter.isPortalMaterial(material) && ItemFilter.isDisabledMaterial(material)) {
+                            if (ItemFilter.isDisabledMaterial(material)) {
                                 Set<String> tags = blockDisplay.getScoreboardTags();
                                 if (tags.contains(CamouflagePlate.KEY)) {
                                     String sfid = "VARIOUS_CLUTTER_CAMOUFLAGE_PLATE_" + blockDisplay.getBlock().getMaterial().name().toUpperCase();
