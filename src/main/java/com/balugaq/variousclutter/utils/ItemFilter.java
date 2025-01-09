@@ -198,6 +198,8 @@ public class ItemFilter {
                         || material == Material.BIG_DRIPLEAF
                         || material == Material.SMALL_DRIPLEAF
                         || material == Material.SCAFFOLDING
+                        || material == materialValueOf("WILDFLOWERS")
+                        || material == materialValueOf("LEAF_LITTER")
                         || material == materialValueOf("GRASS");
     }
 
