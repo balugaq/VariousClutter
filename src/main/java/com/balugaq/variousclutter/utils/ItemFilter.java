@@ -1,5 +1,6 @@
 package com.balugaq.variousclutter.utils;
 
+import com.balugaq.variousclutter.VariousClutter;
 import com.destroystokyo.paper.MaterialTags;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
@@ -8,10 +9,12 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public class ItemFilter {
     public boolean isDisabledMaterial(@NotNull Material material) {
+        if (VariousClutter.instance.configManager.isAllowAllTypesCamouflagePlate()) {
+            return false;
+        }
         return
                 // Items that can store items
-                MaterialTags.SHULKER_BOXES.isTagged(material)
-                        || material == Material.LECTERN
+                material == Material.LECTERN
                         || material == Material.HOPPER
                         || material == materialValueOf("VAULT")
 

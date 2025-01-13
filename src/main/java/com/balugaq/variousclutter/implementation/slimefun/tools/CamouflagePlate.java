@@ -1,7 +1,7 @@
 package com.balugaq.variousclutter.implementation.slimefun.tools;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.api.slimefun.Tool;
+import com.balugaq.variousclutter.api.slimefun.AbstractTool;
 import com.balugaq.variousclutter.api.display.BlockModelBuilder;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
@@ -23,7 +23,7 @@ import org.joml.Vector3f;
 
 import java.util.Optional;
 
-public class CamouflagePlate extends Tool {
+public class CamouflagePlate extends AbstractTool {
     public static final String KEY = "camouflage_plate";
     public static final float FIXED_BLOCK_SIZE = 0.01f;
     private static final BlockModelBuilder model = new BlockModelBuilder().brightness(new Display.Brightness(0, 15));
