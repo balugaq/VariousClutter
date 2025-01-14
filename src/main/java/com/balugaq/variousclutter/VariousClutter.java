@@ -106,7 +106,7 @@ public class VariousClutter extends BasePlugin {
                         if (entity instanceof BlockDisplay blockDisplay) {
                             Location location = blockDisplay.getLocation();
                             Material material = location.getBlock().getType();
-                            if (ItemFilter.isDisabledMaterial(material)) {
+                            if (material == Material.AIR || ItemFilter.isDisabledMaterial(material)) {
                                 Set<String> tags = blockDisplay.getScoreboardTags();
                                 if (tags.contains(CamouflagePlate.KEY)) {
                                     String sfid = "VARIOUS_CLUTTER_CAMOUFLAGE_PLATE_" + blockDisplay.getBlock().getMaterial().name().toUpperCase();

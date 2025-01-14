@@ -71,7 +71,11 @@ public class VariousClutterSetup {
 
         // Register CamouflagePlates for all whole blocks
         for (Material material : Material.values()) {
-            if (ItemFilter.isDisabledMaterial(material)) {
+            if (material == Material.AIR || ItemFilter.isDisabledMaterial(material)) {
+                continue;
+            }
+
+            if (!material.isBlock() || !material.isSolid() || !material.isItem()) {
                 continue;
             }
 

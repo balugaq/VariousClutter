@@ -39,6 +39,7 @@ public class ItemFilter {
                         || material.isAir()
                         || !material.isBlock()
                         || !material.isItem()
+                        || !material.isSolid()
 
                         // Items that is invalid
                         || material == Material.END_PORTAL_FRAME

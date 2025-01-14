@@ -1,3 +1,4 @@
 auto-update: true
 debug: false
+# It's unsafe to allow all types of camouflage plates
 allow-all-types-camouflage-plate: false

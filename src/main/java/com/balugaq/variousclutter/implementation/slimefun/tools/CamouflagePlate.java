@@ -55,7 +55,7 @@ public class CamouflagePlate extends AbstractTool {
 
             if (SlimefunItem.getByItem(itemStack) instanceof CamouflagePlate camouflagePlate) {
                 Material blockType = block.getType();
-                if (!ItemFilter.isDisabledMaterial(blockType)) {
+                if (blockType != Material.AIR && !ItemFilter.isDisabledMaterial(blockType)) {
                     camouflagePlate.addDisplay(location, clickedFace, material);
                     if (!player.isOp()) {
                         itemStack.setAmount(itemStack.getAmount() - 1);
