@@ -2,12 +2,15 @@ package com.balugaq.variousclutter;
 
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import com.balugaq.variousclutter.core.listeners.CamouflagePlateBreakListener;
+import com.balugaq.variousclutter.core.listeners.InfiniteBlockListener;
 import com.balugaq.variousclutter.core.listeners.SpecialPortalCreateListener;
 import com.balugaq.variousclutter.core.managers.ConfigManager;
+import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
 import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.VariousClutterSetup;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -20,15 +23,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class VariousClutter extends BasePlugin {
     public static VariousClutter instance;
     public final Set<UUID> camouflagePlates = new HashSet<>();
+    public final Map<Location, Material> infiniteBlocks = new ConcurrentHashMap<>();
     public ConfigManager configManager;
     public Runnable camouflagePlateCheckTask;
+    public Runnable rollbackInfiniteBlocksTask;
 
     @Override
     public void onEnable() {
@@ -46,6 +53,7 @@ public class VariousClutter extends BasePlugin {
         Debug.log("Registering Listeners...");
         Bukkit.getPluginManager().registerEvents(new SpecialPortalCreateListener(), instance);
         Bukkit.getPluginManager().registerEvents(new CamouflagePlateBreakListener(), instance);
+        Bukkit.getPluginManager().registerEvents(new InfiniteBlockListener(), instance);
         Debug.log("Listeners Registered!");
 
         Debug.log("Loading Tasks...");
@@ -84,6 +92,7 @@ public class VariousClutter extends BasePlugin {
 
     private void startTasks() {
         Bukkit.getScheduler().runTaskTimer(instance, getCamouflagePlateCheckTask(), 20L, 60L);
+        Bukkit.getScheduler().runTaskTimer(instance, getRollbackInfiniteBlocks(), 20L, 1L);
     }
 
     protected Runnable getCamouflagePlateCheckTask() {
@@ -95,9 +104,7 @@ public class VariousClutter extends BasePlugin {
                     if (camouflagePlates.isEmpty()) {
                         return;
                     }
-                }
 
-                synchronized (camouflagePlates) {
                     for (UUID uuid : camouflagePlates) {
                         Entity entity = Bukkit.getEntity(uuid);
                         if (entity == null) {
@@ -128,8 +135,8 @@ public class VariousClutter extends BasePlugin {
                     return;
                 }
 
-                for (UUID uuid : invalidUUIDs) {
-                    synchronized (camouflagePlates) {
+                synchronized (camouflagePlates) {
+                    for (UUID uuid : invalidUUIDs) {
                         camouflagePlates.remove(uuid);
                     }
                 }
@@ -137,5 +144,42 @@ public class VariousClutter extends BasePlugin {
         }
 
         return camouflagePlateCheckTask;
+    }
+
+    protected Runnable getRollbackInfiniteBlocks() {
+        if (rollbackInfiniteBlocksTask == null) {
+            rollbackInfiniteBlocksTask = () -> {
+                Debug.debug("Running Rollback Infinite Blocks Task...");
+                Set<Location> invalidLocations = new HashSet<>();
+                synchronized (infiniteBlocks) {
+                    if (infiniteBlocks.isEmpty()) {
+                        return;
+                    }
+                    for (Map.Entry<Location, Material> entry : infiniteBlocks.entrySet()) {
+                        Location location = entry.getKey();
+                        Material material = entry.getValue();
+                        if (location.getBlock().getType() != material) {
+                            if (StorageCacheUtils.getSfItem(location) instanceof InfiniteBlock) {
+                                location.getBlock().setType(material);
+                            } else {
+                                invalidLocations.add(location);
+                            }
+                        }
+                    }
+
+                    if (invalidLocations.isEmpty()) {
+                        return;
+                    }
+                }
+
+                synchronized (infiniteBlocks) {
+                    for (Location location : invalidLocations) {
+                        infiniteBlocks.remove(location);
+                    }
+                }
+            };
+        }
+
+        return rollbackInfiniteBlocksTask;
     }
 }

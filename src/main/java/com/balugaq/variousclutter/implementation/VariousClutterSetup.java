@@ -1,8 +1,10 @@
 package com.balugaq.variousclutter.implementation;
 
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
+import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
 import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.slimefun.items.PortalFrame;
+import com.balugaq.variousclutter.implementation.slimefun.tools.InfiniteBlockBreaker;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -29,7 +31,11 @@ public class VariousClutterSetup {
     public static SubItemGroup clutter;
     public static SubItemGroup camouflage_plates;
     public static SlimefunItemStack portalFrameItem;
+    public static SlimefunItemStack infiniteBlockItem;
+    public static SlimefunItemStack infiniteBlockBreakerItem;
     public static PortalFrame portalFrame;
+    public static InfiniteBlock infiniteBlock;
+    public static InfiniteBlockBreaker infiniteBlockBreaker;
 
     public static void setup(BasePlugin plugin) {
         instance = plugin;
@@ -98,5 +104,24 @@ public class VariousClutterSetup {
                 Debug.log(e);
             }
         }
+        
+        infiniteBlockItem = new SlimefunItemStack("VARIOUS_CLUTTER_INFINITE_BLOCK",
+                Material.IRON_BLOCK,
+                "&e无限方块",
+                "",
+                "&4&ka &r&c你似乎可以用它创造无限方块...",
+                "&4&ka &r&c手持物品对此方块右键可设置方块类型",
+                "&4仅 OP 权限可用"
+        );
+        
+        infiniteBlock = (InfiniteBlock) new InfiniteBlock(clutter, infiniteBlockItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
+        infiniteBlockBreakerItem = new SlimefunItemStack("VARIOUS_CLUTTER_INFINITE_BLOCK_BREAKER",
+                Material.GOLDEN_PICKAXE,
+                "&e无限方块破坏器",
+                "",
+                "&4&ka &r&c你可以用它破坏无限方块...",
+                "&4&ka &r&c仅 OP 权限可用"
+        );
+        infiniteBlockBreaker = (InfiniteBlockBreaker) new InfiniteBlockBreaker(clutter, infiniteBlockBreakerItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
     }
 }
