@@ -2,9 +2,11 @@ package com.balugaq.variousclutter.implementation;
 
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
+import com.balugaq.variousclutter.implementation.slimefun.items.ReducingAgent;
 import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.slimefun.items.PortalFrame;
 import com.balugaq.variousclutter.implementation.slimefun.tools.InfiniteBlockBreaker;
+import com.balugaq.variousclutter.implementation.slimefun.tools.SlimefunBlockRestorer;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -33,9 +35,13 @@ public class VariousClutterSetup {
     public static SlimefunItemStack portalFrameItem;
     public static SlimefunItemStack infiniteBlockItem;
     public static SlimefunItemStack infiniteBlockBreakerItem;
+    public static SlimefunItemStack slimefunBlockRestorerItem;
+    public static SlimefunItemStack reducingAgentItem;
     public static PortalFrame portalFrame;
     public static InfiniteBlock infiniteBlock;
     public static InfiniteBlockBreaker infiniteBlockBreaker;
+    public static SlimefunBlockRestorer slimefunBlockRestorer;
+    public static ReducingAgent reducingAgent;
 
     public static void setup(BasePlugin plugin) {
         instance = plugin;
@@ -123,5 +129,21 @@ public class VariousClutterSetup {
                 "&4&ka &r&c仅 OP 权限可用"
         );
         infiniteBlockBreaker = (InfiniteBlockBreaker) new InfiniteBlockBreaker(clutter, infiniteBlockBreakerItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
+
+        slimefunBlockRestorerItem = new SlimefunItemStack("VARIOUS_CLUTTER_SLIMEFUN_BLOCK_RESTORER",
+                Material.BLAZE_ROD,
+                "&eSlimefun 方块恢复器",
+                "",
+                "&4&ka &r&c你可以用它恢复丢失方块类型的 Slimefun 方块...",
+                "&4&ka &r&c仅 OP 权限可用"
+        );
+        slimefunBlockRestorer = (SlimefunBlockRestorer) new SlimefunBlockRestorer(clutter, slimefunBlockRestorerItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
+        reducingAgentItem = new SlimefunItemStack("VARIOUS_CLUTTER_REDUCING_AGENT",
+                Material.GUNPOWDER,
+                "&e还原剂",
+                "",
+                "&4&ka &r&c你可以用它还原一个物品..."
+        );
+        reducingAgent = (ReducingAgent) new ReducingAgent(clutter, reducingAgentItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
     }
 }

@@ -3,6 +3,7 @@ package com.balugaq.variousclutter;
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import com.balugaq.variousclutter.core.listeners.CamouflagePlateBreakListener;
 import com.balugaq.variousclutter.core.listeners.InfiniteBlockListener;
+import com.balugaq.variousclutter.core.listeners.ReducingAgentUseListener;
 import com.balugaq.variousclutter.core.listeners.SpecialPortalCreateListener;
 import com.balugaq.variousclutter.core.managers.ConfigManager;
 import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
@@ -54,6 +55,7 @@ public class VariousClutter extends BasePlugin {
         Bukkit.getPluginManager().registerEvents(new SpecialPortalCreateListener(), instance);
         Bukkit.getPluginManager().registerEvents(new CamouflagePlateBreakListener(), instance);
         Bukkit.getPluginManager().registerEvents(new InfiniteBlockListener(), instance);
+        Bukkit.getPluginManager().registerEvents(new ReducingAgentUseListener(), instance);
         Debug.log("Listeners Registered!");
 
         Debug.log("Loading Tasks...");

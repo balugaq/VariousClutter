@@ -67,7 +67,7 @@ public class InfiniteBlockListener implements Listener {
                     VariousClutter.instance.infiniteBlocks.put(location, material);
                 }
                 StorageCacheUtils.setData(location, InfiniteBlock.BS_MATERIAL_KEY, material.name());
-                player.sendMessage("Infinite block type set to " + material.name());
+                player.sendMessage("已设置无限方块的类型");
                 event.setCancelled(true);
             }
         }

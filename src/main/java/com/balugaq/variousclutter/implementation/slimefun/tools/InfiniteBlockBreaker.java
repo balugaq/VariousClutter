@@ -39,7 +39,7 @@ public class InfiniteBlockBreaker extends AbstractTool implements NotPlaceable {
                 Location location = blockBreakEvent.getBlock().getLocation();
                 if (StorageCacheUtils.getSfItem(location) instanceof InfiniteBlock) {
                     Slimefun.getDatabaseManager().getBlockDataController().removeBlock(location);
-                    player.sendMessage("Infinite block removed.");
+                    player.sendMessage("已破坏无限方块");
                 }
             }
         });
