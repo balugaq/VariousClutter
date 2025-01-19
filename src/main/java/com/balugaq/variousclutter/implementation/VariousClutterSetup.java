@@ -2,9 +2,10 @@ package com.balugaq.variousclutter.implementation;
 
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
 import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
-import com.balugaq.variousclutter.implementation.slimefun.items.ReducingAgent;
-import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.slimefun.items.PortalFrame;
+import com.balugaq.variousclutter.implementation.slimefun.items.ReducingAgent;
+import com.balugaq.variousclutter.implementation.slimefun.items.machines.PressureGenerator;
+import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
 import com.balugaq.variousclutter.implementation.slimefun.tools.InfiniteBlockBreaker;
 import com.balugaq.variousclutter.implementation.slimefun.tools.SlimefunBlockRestorer;
 import com.balugaq.variousclutter.utils.Debug;
@@ -23,10 +24,17 @@ import org.bukkit.inventory.ItemStack;
 public class VariousClutterSetup {
     public static final ItemStack Obsidian = new ItemStack(Material.OBSIDIAN);
     public static final ItemStack ItemFrame = new ItemStack(Material.ITEM_FRAME);
+    public static final ItemStack Stone = new ItemStack(Material.STONE);
+    public static final ItemStack StonePressurePlate = new ItemStack(Material.STONE_PRESSURE_PLATE);
     public static final ItemStack[] portalFrameRecipe = {
             Obsidian, SlimefunItems.COMPRESSED_CARBON, Obsidian,
             SlimefunItems.COMPRESSED_CARBON, SlimefunItems.ENRICHED_NETHER_ICE, SlimefunItems.COMPRESSED_CARBON,
             Obsidian, SlimefunItems.COMPRESSED_CARBON, Obsidian
+    };
+    public static final ItemStack[] pressureGeneratorRecipe = {
+            StonePressurePlate, StonePressurePlate, StonePressurePlate,
+            Stone, SlimefunItems.ENERGY_CONNECTOR, Stone,
+            SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.ELECTRIC_MOTOR,
     };
     public static BasePlugin instance;
     public static NestedItemGroup nested;
@@ -37,11 +45,13 @@ public class VariousClutterSetup {
     public static SlimefunItemStack infiniteBlockBreakerItem;
     public static SlimefunItemStack slimefunBlockRestorerItem;
     public static SlimefunItemStack reducingAgentItem;
+    public static SlimefunItemStack pressureGeneratorItem;
     public static PortalFrame portalFrame;
     public static InfiniteBlock infiniteBlock;
     public static InfiniteBlockBreaker infiniteBlockBreaker;
     public static SlimefunBlockRestorer slimefunBlockRestorer;
     public static ReducingAgent reducingAgent;
+    public static PressureGenerator pressureGenerator;
 
     public static void setup(BasePlugin plugin) {
         instance = plugin;
@@ -110,7 +120,7 @@ public class VariousClutterSetup {
                 Debug.log(e);
             }
         }
-        
+
         infiniteBlockItem = new SlimefunItemStack("VARIOUS_CLUTTER_INFINITE_BLOCK",
                 Material.IRON_BLOCK,
                 "&e无限方块",
@@ -119,7 +129,7 @@ public class VariousClutterSetup {
                 "&4&ka &r&c手持物品对此方块右键可设置方块类型",
                 "&4仅 OP 权限可用"
         );
-        
+
         infiniteBlock = (InfiniteBlock) new InfiniteBlock(clutter, infiniteBlockItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
         infiniteBlockBreakerItem = new SlimefunItemStack("VARIOUS_CLUTTER_INFINITE_BLOCK_BREAKER",
                 Material.GOLDEN_PICKAXE,
@@ -145,5 +155,12 @@ public class VariousClutterSetup {
                 "&4&ka &r&c你可以用它还原一个物品..."
         );
         reducingAgent = (ReducingAgent) new ReducingAgent(clutter, reducingAgentItem, RecipeType.NULL, new ItemStack[]{}).register(instance);
+        pressureGeneratorItem = new SlimefunItemStack("VARIOUS_CLUTTER_PRESSURE_GENERATOR",
+                Material.STONE_PRESSURE_PLATE,
+                "&3踩踏式发电机",
+                "",
+                "&4&ka &r&d通过踩踏产生能源..."
+        );
+        pressureGenerator = (PressureGenerator) new PressureGenerator(clutter, pressureGeneratorItem, RecipeType.ENHANCED_CRAFTING_TABLE, pressureGeneratorRecipe).register(instance);
     }
 }

@@ -30,6 +30,7 @@ import java.util.UUID;
 public class SlimefunBlockRestorer extends AbstractTool {
     private static final long COOLDOWN = 1000 * 5;
     private static final Map<UUID, Long> cooldown_cache = new HashMap<>();
+
     public SlimefunBlockRestorer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

@@ -1,14 +1,11 @@
 package com.balugaq.variousclutter;
 
 import com.balugaq.variousclutter.api.plugin.BasePlugin;
-import com.balugaq.variousclutter.core.listeners.CamouflagePlateBreakListener;
-import com.balugaq.variousclutter.core.listeners.InfiniteBlockListener;
-import com.balugaq.variousclutter.core.listeners.ReducingAgentUseListener;
-import com.balugaq.variousclutter.core.listeners.SpecialPortalCreateListener;
 import com.balugaq.variousclutter.core.managers.ConfigManager;
+import com.balugaq.variousclutter.core.managers.ListenerManager;
+import com.balugaq.variousclutter.implementation.VariousClutterSetup;
 import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
 import com.balugaq.variousclutter.implementation.slimefun.tools.CamouflagePlate;
-import com.balugaq.variousclutter.implementation.VariousClutterSetup;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
@@ -35,6 +32,7 @@ public class VariousClutter extends BasePlugin {
     public final Set<UUID> camouflagePlates = new HashSet<>();
     public final Map<Location, Material> infiniteBlocks = new ConcurrentHashMap<>();
     public ConfigManager configManager;
+    public ListenerManager listenerManager;
     public Runnable camouflagePlateCheckTask;
     public Runnable rollbackInfiniteBlocksTask;
 
@@ -49,18 +47,13 @@ public class VariousClutter extends BasePlugin {
 
         Debug.log("Setting Up Items...");
         VariousClutterSetup.setup(instance);
-        Debug.log("Set Up Items Successfully!");
 
         Debug.log("Registering Listeners...");
-        Bukkit.getPluginManager().registerEvents(new SpecialPortalCreateListener(), instance);
-        Bukkit.getPluginManager().registerEvents(new CamouflagePlateBreakListener(), instance);
-        Bukkit.getPluginManager().registerEvents(new InfiniteBlockListener(), instance);
-        Bukkit.getPluginManager().registerEvents(new ReducingAgentUseListener(), instance);
-        Debug.log("Listeners Registered!");
+        listenerManager = new ListenerManager(instance);
+        listenerManager.setup();
 
         Debug.log("Loading Tasks...");
         startTasks();
-        Debug.log("Tasks Loaded!");
 
         Debug.log("VariousClutter Is Enabled!");
     }

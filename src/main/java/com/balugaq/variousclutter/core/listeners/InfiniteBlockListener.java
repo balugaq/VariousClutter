@@ -4,7 +4,6 @@ import com.balugaq.variousclutter.VariousClutter;
 import com.balugaq.variousclutter.implementation.slimefun.items.InfiniteBlock;
 import com.balugaq.variousclutter.implementation.slimefun.tools.InfiniteBlockBreaker;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.SlimefunBlockBreakEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Location;
@@ -16,8 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Optional;
 
 public class InfiniteBlockListener implements Listener {
     @EventHandler

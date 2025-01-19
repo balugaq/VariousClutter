@@ -1,8 +1,8 @@
 package com.balugaq.variousclutter.implementation.slimefun.tools;
 
 import com.balugaq.variousclutter.VariousClutter;
-import com.balugaq.variousclutter.api.slimefun.AbstractTool;
 import com.balugaq.variousclutter.api.display.BlockModelBuilder;
+import com.balugaq.variousclutter.api.slimefun.AbstractTool;
 import com.balugaq.variousclutter.utils.Debug;
 import com.balugaq.variousclutter.utils.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -30,6 +30,17 @@ public class CamouflagePlate extends AbstractTool {
 
     public CamouflagePlate(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    private static boolean isCamouflagePlate(Entity entity) {
+        if (entity instanceof BlockDisplay blockDisplay) {
+            return isCamouflagePlate(blockDisplay);
+        }
+        return false;
+    }
+
+    private static boolean isCamouflagePlate(BlockDisplay blockDisplay) {
+        return blockDisplay.getScoreboardTags().contains(KEY);
     }
 
     @Override
@@ -130,15 +141,5 @@ public class CamouflagePlate extends AbstractTool {
         synchronized (VariousClutter.instance.camouflagePlates) {
             VariousClutter.instance.camouflagePlates.add(blockDisplay.getUniqueId());
         }
-    }
-
-    private static boolean isCamouflagePlate(Entity entity) {
-        if (entity instanceof BlockDisplay blockDisplay) {
-            return isCamouflagePlate(blockDisplay);
-        }
-        return false;
-    }
-    private static boolean isCamouflagePlate(BlockDisplay blockDisplay) {
-        return blockDisplay.getScoreboardTags().contains(KEY);
     }
 }

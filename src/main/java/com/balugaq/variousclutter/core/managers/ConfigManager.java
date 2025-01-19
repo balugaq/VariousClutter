@@ -70,6 +70,7 @@ public class ConfigManager {
     public boolean isDebug() {
         return plugin.getConfig().getBoolean("debug");
     }
+
     public boolean isAllowAllTypesCamouflagePlate() {
         return plugin.getConfig().getBoolean("allow-all-types-camouflage-plate");
     }

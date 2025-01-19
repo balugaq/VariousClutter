@@ -32,8 +32,10 @@ public class ReducingAgent extends AbstractItem {
             }
 
             Multimap<Attribute, AttributeModifier> attributes = meta.getAttributeModifiers();
-            for (Attribute attribute : attributes.keySet()) {
-                meta.removeAttributeModifier(attribute);
+            if (attributes != null) {
+                for (Attribute attribute : attributes.keySet()) {
+                    meta.removeAttributeModifier(attribute);
+                }
             }
 
             Map<Enchantment, Integer> enchants = meta.getEnchants();
@@ -43,7 +45,7 @@ public class ReducingAgent extends AbstractItem {
 
             clone.setItemMeta(meta);
             if (meta instanceof Damageable damageable) {
-                damageable.resetDamage();
+                damageable.setDamage(0);
             }
         }
 
