@@ -14,17 +14,17 @@ import org.bukkit.inventory.ItemStack;
 public class ReducingAgentUseListener implements Listener {
     @EventHandler
     public void onAgentUse(InventoryClickEvent event) {
-        Debug.log("ReducingAgentUseListener.onAgentUse");
+        Debug.debug("ReducingAgentUseListener.onAgentUse");
         if (event.isRightClick()) {
-            Debug.log("ReducingAgentUseListener.onAgentUse: isRightClick");
+            Debug.debug("ReducingAgentUseListener.onAgentUse: isRightClick");
             ItemStack currentItem = event.getCurrentItem();
-            Debug.log("CurrentItem: " + currentItem);
+            Debug.debug("CurrentItem: " + currentItem);
             if (currentItem != null && currentItem.getType() != Material.AIR) {
-                Debug.log("ReducingAgentUseListener.onAgentUse: currentItem is not null");
+                Debug.debug("ReducingAgentUseListener.onAgentUse: currentItem is not null");
                 ItemStack cursor = event.getCursor();
-                Debug.log("Cursor: " + cursor);
+                Debug.debug("Cursor: " + cursor);
                 if (SlimefunItem.getByItem(cursor) instanceof ReducingAgent reducingAgent) {
-                    Debug.log("ReducingAgentUseListener.onAgentUse: cursor is ReducingAgent");
+                    Debug.debug("ReducingAgentUseListener.onAgentUse: cursor is ReducingAgent");
                     ItemStack result = reducingAgent.use(cursor, currentItem);
                     event.setCurrentItem(result);
                     Player player = (Player) event.getWhoClicked();
